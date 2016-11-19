@@ -9,4 +9,7 @@ public class TeleportTarget : MonoBehaviour {
 	}
 
 
+	public Vector3 getLocationRelative(Vector3 shift){
+		return getLocation() + shift;
+	}
 }
