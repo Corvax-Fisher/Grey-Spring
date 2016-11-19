@@ -8,14 +8,18 @@ public class ColorCondition : ICondition {
 
 
 	void Start () {
-		gameObject.GetComponent<Renderer> ().material.color = color.color;
+		if (color != null && color.color != null) {
+			gameObject.GetComponent<Renderer> ().material.color = color.color;
+		}
 	}
 
 	public override bool isConditionFullfilled (GameObject gameObject)
 	{
+
+
 		Color current = gameObject.GetComponent<Renderer> ().material.color;
 		
-		return current.Equals (color.color);
+		return current != null && color != null && current.Equals (color.color);
 	}
 
 

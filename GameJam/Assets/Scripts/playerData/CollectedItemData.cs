@@ -14,7 +14,7 @@ public class CollectedItemData : MonoBehaviour {
 		foreach(CollectableItem item in collectedItems){
 
 			if (items.Contains (item)) {
-				Debug.Log(count++);
+				count++;
 			}
 		}
 			
@@ -23,7 +23,6 @@ public class CollectedItemData : MonoBehaviour {
 
 	public void addItem(CollectableItem item){
 		collectedItems.Add (item);
-		printData ();
 	}
 
 	public void printData(){

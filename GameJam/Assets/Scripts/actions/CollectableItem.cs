@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CollectableItem : MonoBehaviour {
+public class CollectableItem : Action {
 	
-	void OnTriggerEnter(Collider other){
-		CollectedItemData cid = other.gameObject.GetComponent<CollectedItemData>();
+	public override void ExecuteAction (GameObject other)
+	{
+		CollectedItemData cid = other.GetComponent<CollectedItemData>();
 
 		if (cid != null && this.gameObject.activeSelf) {
 			cid.addItem (this);
