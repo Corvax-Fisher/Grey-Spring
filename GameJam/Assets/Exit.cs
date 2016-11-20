@@ -18,7 +18,7 @@ public class Exit : MonoBehaviour {
   {
     exitText.text = "You sprang it!";
     other.gameObject.SetActive(false);
-    if(!String.IsNullOrEmpty(nextSceneName))
+		if(!String.IsNullOrEmpty(nextSceneName))
       Invoke("LoadNextLevel", 3);
   }
 
