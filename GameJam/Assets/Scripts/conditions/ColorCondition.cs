@@ -13,11 +13,9 @@ public class ColorCondition : ICondition {
 		}
 	}
 
-	public override bool isConditionFullfilled (GameObject gameObject)
+	public override bool isConditionFullfilled (GameObject gameObjectOther)
 	{
-
-
-		Color current = gameObject.GetComponent<Renderer> ().material.color;
+		Color current = gameObjectOther.GetComponent<Renderer> ().material.color;
 		
 		return current != null && color != null && current.Equals (color.color);
 	}

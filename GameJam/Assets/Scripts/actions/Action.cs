@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public abstract class Action : MonoBehaviour {
 
 
-	public ICondition[] conditions;
+	private ICondition[] conditions;
+
+	public Action[] optionalActions;
 
 	void Start () {
 		this.conditions = this.gameObject.GetComponents<ICondition> ();
@@ -24,6 +26,11 @@ public abstract class Action : MonoBehaviour {
 
 		if (isFullfilled) {
 			this.ExecuteAction(other.gameObject);
+
+			foreach(Action action in optionalActions){
+				action.ExecuteAction (other.gameObject);
+			}
+
 		}
 
 	}
