@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public abstract class Action : MonoBehaviour {
 
 
-	public ICondition[] conditions;
+	private ICondition[] conditions;
 
 	void Start () {
 		this.conditions = this.gameObject.GetComponents<ICondition> ();
