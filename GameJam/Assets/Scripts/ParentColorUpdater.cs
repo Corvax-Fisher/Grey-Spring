@@ -16,7 +16,7 @@ public class ParentColorUpdater : MonoBehaviour {
 	
 		ColorCondition cd = this.gameObject.GetComponentInParent<ColorCondition> ();
 
-		if (cd != null && cd.color!=null && cd.color.color!=null) {
+		if (cd.color.color!=null) {
 
 			foreach (Renderer r in rend) {
 				r.material.color= cd.color.color;
