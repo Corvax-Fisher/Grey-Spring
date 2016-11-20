@@ -10,6 +10,7 @@ public class Boundary
 public class InputController : MonoBehaviour
 {
   public float scale;
+  public float speed;
   //public float tilt;
   public Boundary boundary;
 
@@ -22,17 +23,32 @@ public class InputController : MonoBehaviour
 
   void FixedUpdate()
   {
-    float moveHorizontal = -Input.GetAxis("Horizontal");
-    float moveVertical = Input.GetAxis("Vertical");
+    float moveHorizontal = 0f;
+    float moveVertical = 0f;
 
-    //Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-    //rb.velocity = movement * speed;
+#if UNITY_STANDALONE
+    moveHorizontal = -Input.GetAxis("Horizontal");
+    moveVertical = Input.GetAxis("Vertical");
 
     transform.Rotate(
       moveVertical * Time.fixedDeltaTime * scale,
       0f,
       moveHorizontal * Time.fixedDeltaTime * scale
     );
+#elif UNITY_ANDROID
+    moveHorizontal = -Input.acceleration.x;
+    moveVertical = Input.acceleration.y;
+
+    Quaternion to = Quaternion.Euler(
+      moveVertical * scale,
+      0f,
+      moveHorizontal * scale
+    );
+    transform.rotation = Quaternion.Lerp(transform.rotation, to, Time.fixedDeltaTime * speed);
+#endif
+    //Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+    //rb.velocity = movement * speed;
+
 
     Vector3 negativeEulerAngles = transform.eulerAngles;
     negativeEulerAngles.x = negativeEulerAngles.x < 180f ? negativeEulerAngles.x : negativeEulerAngles.x - 360;

@@ -7,7 +7,8 @@ public class JumpAction : Action {
 
 	public override void ExecuteAction (GameObject other)
 	{
-		other.GetComponent<JumpAccelerator> ().Jump (force);
+    Vector3 up = transform.rotation * Vector3.up;
+		other.GetComponent<JumpAccelerator> ().Jump(force,up);
 
 	}
 
