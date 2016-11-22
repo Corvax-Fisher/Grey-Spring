@@ -7,7 +7,7 @@ public abstract class Action : MonoBehaviour {
 
 	private ICondition[] conditions;
 
-	void Start () {
+	protected void Start () {
 		this.conditions = this.gameObject.GetComponents<ICondition> ();
 	}
 

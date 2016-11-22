@@ -11,30 +11,46 @@ public class InputController : MonoBehaviour
 {
   public float scale;
   public float speed;
-  //public float tilt;
   public Boundary boundary;
-
-  //private Rigidbody rb;
-
-  //void Awake()
-  //{
-  //  rb = GetComponent<Rigidbody>();
-  //}
 
   void FixedUpdate()
   {
     float moveHorizontal = 0f;
     float moveVertical = 0f;
 
-#if UNITY_STANDALONE
+#if UNITY_EDITOR
+    if (UnityEditor.EditorApplication.isRemoteConnected)
+    {
+      moveHorizontal = -Input.acceleration.x;
+      moveVertical = Input.acceleration.y;
+    } else
+    {
+      moveHorizontal = -Input.GetAxis("Horizontal");
+      moveVertical = Input.GetAxis("Vertical");
+      //transform.Rotate(
+      //  moveVertical * Time.fixedDeltaTime * scale,
+      //  0f,
+      //  moveHorizontal * Time.fixedDeltaTime * scale
+      //);
+    }
+
+    Quaternion to = Quaternion.Euler(
+      moveVertical * scale,
+      0f,
+      moveHorizontal * scale
+    );
+    transform.rotation = Quaternion.Lerp(transform.rotation, to, Time.fixedDeltaTime * speed);
+#elif UNITY_STANDALONE
     moveHorizontal = -Input.GetAxis("Horizontal");
     moveVertical = Input.GetAxis("Vertical");
 
-    transform.Rotate(
-      moveVertical * Time.fixedDeltaTime * scale,
+    Quaternion to = Quaternion.Euler(
+      moveVertical * scale,
       0f,
-      moveHorizontal * Time.fixedDeltaTime * scale
+      moveHorizontal * scale
     );
+    transform.rotation = Quaternion.Lerp(transform.rotation, to, Time.fixedDeltaTime * speed);
+
 #elif UNITY_ANDROID
     moveHorizontal = -Input.acceleration.x;
     moveVertical = Input.acceleration.y;
@@ -46,9 +62,6 @@ public class InputController : MonoBehaviour
     );
     transform.rotation = Quaternion.Lerp(transform.rotation, to, Time.fixedDeltaTime * speed);
 #endif
-    //Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-    //rb.velocity = movement * speed;
-
 
     Vector3 negativeEulerAngles = transform.eulerAngles;
     negativeEulerAngles.x = negativeEulerAngles.x < 180f ? negativeEulerAngles.x : negativeEulerAngles.x - 360;
