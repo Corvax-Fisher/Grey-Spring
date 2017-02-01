@@ -27,11 +27,6 @@ public class InputController : MonoBehaviour
     {
       moveHorizontal = -Input.GetAxis("Horizontal");
       moveVertical = Input.GetAxis("Vertical");
-      //transform.Rotate(
-      //  moveVertical * Time.fixedDeltaTime * scale,
-      //  0f,
-      //  moveHorizontal * Time.fixedDeltaTime * scale
-      //);
     }
 
     Quaternion to = Quaternion.Euler(
@@ -40,7 +35,7 @@ public class InputController : MonoBehaviour
       moveHorizontal * scale
     );
     transform.rotation = Quaternion.Lerp(transform.rotation, to, Time.fixedDeltaTime * speed);
-#elif UNITY_STANDALONE
+#elif UNITY_STANDALONE || UNITY_WEBGL
     moveHorizontal = -Input.GetAxis("Horizontal");
     moveVertical = Input.GetAxis("Vertical");
 
@@ -51,7 +46,7 @@ public class InputController : MonoBehaviour
     );
     transform.rotation = Quaternion.Lerp(transform.rotation, to, Time.fixedDeltaTime * speed);
 
-#elif UNITY_ANDROID
+#elif UNITY_ANDROID || UNITY_IOS
     moveHorizontal = -Input.acceleration.x;
     moveVertical = Input.acceleration.y;
 
